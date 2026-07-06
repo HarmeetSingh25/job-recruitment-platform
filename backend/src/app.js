@@ -15,7 +15,7 @@ app.use(
     credentials: true,
   })
 )
-console.log(import.meta.env , "fdfgdc12");
+
 app.use(morgan("dev"));
 app.use(express.json());
 app.use("/api/jobs", jobRoutes);
