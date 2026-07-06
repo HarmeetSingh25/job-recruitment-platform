@@ -8,3 +8,7 @@ export const getJobs = async (params) => {
 
   return data;
 };
+export const getJobById = async (id) => {
+  const { data } = await api.get(`${ENDPOINTS.JOBS}/${id}`);
+  return data;
+};

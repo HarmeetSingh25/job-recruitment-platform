@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getJobs } from "../services/jobs.service";
+import { getJobById } from "../services/jobs.service";
 
 export const fetchJobs = createAsyncThunk(
   "jobs/fetchJobs",
@@ -8,10 +9,23 @@ export const fetchJobs = createAsyncThunk(
       return await getJobs(params);
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Something went wrong"
+        error.response?.data?.message || "Something went wrong",
       );
     }
-  }
+  },
+);
+
+export const fetchJobById = createAsyncThunk(
+  "jobs/fetchJobById",
+  async (id, thunkAPI) => {
+    try {
+      return await getJobById(id);
+    } catch (err) {
+      return thunkAPI.rejectWithValue(
+        err.response?.data?.message || "Something went wrong",
+      );
+    }
+  },
 );
 
 const initialState = {
@@ -24,6 +38,7 @@ const initialState = {
   },
   loading: false,
   error: null,
+  selectedJob: null,
 };
 
 const jobsSlice = createSlice({
@@ -36,12 +51,26 @@ const jobsSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-     .addCase(fetchJobs.fulfilled, (state, action) => {
-    state.loading = false;
-    state.jobs = action.payload.jobs;
-    state.pagination = action.payload.pagination;
-})
+      .addCase(fetchJobs.fulfilled, (state, action) => {
+        state.loading = false;
+        state.jobs = action.payload.jobs;
+        state.pagination = action.payload.pagination;
+      })
       .addCase(fetchJobs.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(fetchJobById.pending, (state) => {
+        state.loading = true;
+      })
+
+      .addCase(fetchJobById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedJob = action.payload.job;
+      })
+
+      .addCase(fetchJobById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

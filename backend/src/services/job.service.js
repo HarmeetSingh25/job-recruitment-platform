@@ -31,7 +31,6 @@ export const getalljobs = async (query) => {
       { company: { $regex: search, $options: "i" } },
       { description: { $regex: search, $options: "i" } },
     ];
-    //   console.log(filter, "filter");
   }
 
   if (department) {
