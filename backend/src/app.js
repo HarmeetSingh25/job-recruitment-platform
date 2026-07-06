@@ -8,12 +8,14 @@ import duplicateRouter from "./routes/duplicateJob.routes.js";
 
 
 const app = express();
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: ["http://localhost:5173","https://job-recruitment-platform-1auidkcwt-codes-h7s-projects.vercel.app/"],
+//     credentials: true,
+//   })
+// )
+app.use(cors());
+
 dotenv.config();
 app.use(morgan("dev"));
 app.use(express.json());
