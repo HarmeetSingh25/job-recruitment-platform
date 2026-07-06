@@ -1,7 +1,7 @@
 import xlsx from "xlsx";
 import { cleanHtml } from "../utils/cleanHtml.js";
 import { parseDate } from "../utils/parseDate.js";
-
+import { cleanValue } from "../utils/normalizeData.js";
 export const readExcelFile = (filePath) => {
   // Read workbook
   const workbook = xlsx.readFile(filePath);
@@ -15,21 +15,7 @@ export const readExcelFile = (filePath) => {
   const rows = xlsx.utils.sheet_to_json(worksheet);
 
   // Clean every row
- const cleanValue = (value, fallback = "N/A") => {
-  if (value === null || value === undefined) return fallback;
 
-  const cleaned = String(value).trim();
-
-  if (
-    cleaned === "" ||
-    cleaned.toLowerCase() === "null" ||
-    cleaned.toLowerCase() === "undefined"
-  ) {
-    return fallback;
-  }
-
-  return cleaned;
-};
 
 const cleanedRows = rows.map((row) => ({
   title: cleanValue(row.title),

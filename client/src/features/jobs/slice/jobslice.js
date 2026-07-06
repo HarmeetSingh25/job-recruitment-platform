@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getJobs } from "../services/jobs.service";
 import { getJobById } from "../services/jobs.service";
 
+
 export const fetchJobs = createAsyncThunk(
   "jobs/fetchJobs",
   async (params, thunkAPI) => {

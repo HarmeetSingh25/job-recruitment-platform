@@ -67,11 +67,6 @@ const Jobs = () => {
         setFilters={setFilters}
       />
 
-      <JobFilters
-        filters={filters}
-        setFilters={setFilters}
-      />
-
       <JobTable jobs={jobs} />
 
       <Pagination
