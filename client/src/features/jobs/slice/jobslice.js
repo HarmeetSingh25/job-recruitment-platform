@@ -9,10 +9,10 @@ export const fetchJobs = createAsyncThunk(
       return await getJobs(params);
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.data?.message || "Something went wrong",
+        error.response?.data?.message || "Something went wrong"
       );
     }
-  },
+  }
 );
 
 export const fetchJobById = createAsyncThunk(
