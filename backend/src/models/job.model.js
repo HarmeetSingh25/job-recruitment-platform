@@ -29,7 +29,7 @@ const jobSchema = new mongoose.Schema(
     appplyType: {
       type: String,
     },
-    expirenceLevel: {
+    experienceLevel: {
       type: String,
       index: true,
     },

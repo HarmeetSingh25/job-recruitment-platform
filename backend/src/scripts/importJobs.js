@@ -5,6 +5,7 @@ import connectDB from "../config/db.js";
 dotenv.config();
 
 export const importJobs = async () => {
+  await connectDB() 
   try {
     //   Read the Excel file and get the jobs
     const jobs = readExcelFile("./uploads/Jobs Dataset.xlsx");
