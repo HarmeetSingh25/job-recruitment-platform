@@ -5,8 +5,7 @@ import connectDB from "../config/db.js";
 dotenv.config();
 
 export const importJobs = async () => {
-    try {
-      await connectDB();
+  try {
     //   Read the Excel file and get the jobs
     const jobs = readExcelFile("./uploads/Jobs Dataset.xlsx");
 
@@ -15,7 +14,7 @@ export const importJobs = async () => {
     // Fetch all existing URLs in one query
     const existingJobs = await Job.find({}, "url");
     // console.log(existingJobs);
-    
+
     const existingUrls = new Set(existingJobs.map((job) => job.url));
 
     const seenUrls = new Set();
@@ -44,7 +43,6 @@ export const importJobs = async () => {
     process.exit(0);
   } catch (error) {
     console.error(error);
-    // process.exit(1);
   }
 };
 
