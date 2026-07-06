@@ -7,7 +7,7 @@ export const getjobs = async (req, res) => {
   try {
     const jobs = await getalljobs(req.query);
 
-    console.log("Service completed");
+    console.log("Service completed" );
 
     return res.status(200).json({
       success: true,
