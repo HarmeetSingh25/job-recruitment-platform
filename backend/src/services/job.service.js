@@ -1,44 +1,78 @@
 import Job from "../models/job.model.js";
 
 export const getalljobs = async (query) => {
-  try {
-    console.log(query, "query");
+  console.log(query, "query");
 
-    const { search, page = 1, limit = 10 } = query;
-    let filter = {};
+  const {
+    search,
+    page = 1,
+    limit ,
+    department,
+    remoteFlag,
+    experienceLevel,
+    employmentType,
+    sort = "datePosted",
+    order = "desc",
+  } = query;
+  const filter = {};
 
-    if (search) {
-      filter.$or = [
-        { title: { $regex: search, $options: "i" } },
-        { company: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
-      ];
-      console.log(filter, "filter");
-    }
+  const pageNumber = Math.max(Number(page), 1);
+  const pageSize = Math.min(Math.max(Number(limit), 1), 100);
 
-    const skip = (Number(page) - 1) * Number(limit);
+  const allowedSortFields = ["datePosted", "title", "company", "location"];
+  const sortField = allowedSortFields.includes(sort) ? sort : "datePosted";
 
-    const jobs = await Job.find(filter)
-      .sort({ datePosted: -1 })
-      .skip(skip)
-      .limit(limit);
-
-    const totalJobs = await Job.countDocuments(filter);
-
-    //   console.log(jobs.length, "jobs length");
-    // console.log(totalJobs, "total jobs length");
-
-    return {
-      jobs,
-      pagination: {
-        totalJobs,
-        currentPage: page,
-        totalPages: Math.ceil(totalJobs / limit),
-        limit,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    throw error;
+  const sortOption = {
+    [sortField]: order === "asc" ? 1 : -1,
+  };
+  if (search) {
+    filter.$or = [
+      { title: { $regex: search, $options: "i" } },
+      { company: { $regex: search, $options: "i" } },
+      { description: { $regex: search, $options: "i" } },
+    ];
+    //   console.log(filter, "filter");
   }
+
+  if (department) {
+    filter.department = department;
+  }
+
+  if (remoteFlag) {
+    filter.remoteFlag = remoteFlag;
+  }
+
+  if (experienceLevel) {
+    filter.experienceLevel = experienceLevel;
+  }
+
+  if (employmentType) {
+    filter.employmentType = employmentType;
+  }
+
+  const skip = (Number(pageNumber) - 1) * Number(pageSize);
+
+  const jobs = await Job.find(
+    filter,
+    "title company location salary department remoteFlag datePosted",
+  )
+    .sort(sortOption)
+    .skip(skip)
+    .limit(pageSize)
+    .lean();
+
+  const totalJobs = await Job.countDocuments(filter);
+
+  //   console.log(jobs.length, "jobs length");
+  // console.log(totalJobs, "total jobs length");
+
+  return {
+    jobs,
+    pagination: {
+      totalJobs,
+      currentPage: pageNumber,
+      totalPages: Math.ceil(totalJobs / pageSize),
+      pageSize,
+    },
+  };
 };
