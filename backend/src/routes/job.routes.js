@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { getjobs } from "../controller/job.controller.js";
+import { getJobById, getjobs } from "../controller/job.controller.js";
 const router = Router();
 
 router.get("/", getjobs);
-
+router.get("/:id", getJobById);
 export default router;

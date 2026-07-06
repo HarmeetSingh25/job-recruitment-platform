@@ -1,12 +1,13 @@
 import Job from "../models/job.model.js";
+import mongoose from "mongoose";
 
 export const getalljobs = async (query) => {
   console.log(query, "query");
 
   const {
     search,
-    page = 1,
-    limit ,
+    page,
+    limit,
     department,
     remoteFlag,
     experienceLevel,
@@ -15,7 +16,6 @@ export const getalljobs = async (query) => {
     order = "desc",
   } = query;
   const filter = {};
-
   const pageNumber = Math.max(Number(page), 1);
   const pageSize = Math.min(Math.max(Number(limit), 1), 100);
 
@@ -75,4 +75,16 @@ export const getalljobs = async (query) => {
       pageSize,
     },
   };
+};
+
+export const getJobById = async (id) => {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid Job ID");
+  }
+  const job = await Job.findById(id).lean();
+  if (!job) {
+    throw new Error("Job not found");
+  }
+
+  return job;
 };
