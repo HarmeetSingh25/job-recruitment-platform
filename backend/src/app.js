@@ -10,7 +10,7 @@ import duplicateRouter from "./routes/duplicateJob.routes.js";
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173","https://job-recruitment-platform-eta.vercel.app/"],
     credentials: true,
   })
 )
