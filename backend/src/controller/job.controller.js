@@ -22,7 +22,7 @@ export const getjobs = async (req, res) => {
   }
 };
 
-export const getJobById = async (req, res) => {
+export const getSingleJob = async (req, res) => {
   const { id } = req.params;
   try {
     const job = await getJobById(id);

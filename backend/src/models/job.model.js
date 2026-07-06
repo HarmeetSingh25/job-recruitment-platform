@@ -51,7 +51,7 @@ const jobSchema = new mongoose.Schema(
       type: String,
       index: true,
     },
-    remoteflag: {
+    remoteFlag: {
       type: String,
       enum: ["Hybrid", "Remote", "Onsite", null],
       default: null,
