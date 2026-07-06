@@ -6,6 +6,7 @@ import jobRoutes from "./routes/job.routes.js";
 import dashboardRouter from "./routes/dashboard.routes.js";
 import duplicateRouter from "./routes/duplicateJob.routes.js";
 
+dotenv.config();
 
 const app = express();
 // app.use(
@@ -14,9 +15,8 @@ const app = express();
 //     credentials: true,
 //   })
 // )
-app.use(cors());
 
-dotenv.config();
+app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use("/api/jobs", jobRoutes);
