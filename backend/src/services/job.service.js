@@ -54,7 +54,7 @@ export const getalljobs = async (query) => {
 
   const jobs = await Job.find(
     filter,
-    "title company location salary department remoteFlag datePosted",
+    "title company location salary department remoteFlag datePosted employmentType  experienceLevel description url applyType currency",
   )
     .sort(sortOption)
     .skip(skip)
@@ -62,10 +62,6 @@ export const getalljobs = async (query) => {
     .lean();
 
   const totalJobs = await Job.countDocuments(filter);
-
-  //   console.log(jobs.length, "jobs length");
-  // console.log(totalJobs, "total jobs length");
-
   return {
     jobs,
     pagination: {

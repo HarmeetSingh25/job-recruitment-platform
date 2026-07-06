@@ -3,9 +3,9 @@ import { getJobs } from "../services/jobs.service";
 
 export const fetchJobs = createAsyncThunk(
   "jobs/fetchJobs",
-  async (_, thunkAPI) => {
+  async (params, thunkAPI) => {
     try {
-      return await getJobs();
+      return await getJobs(params);
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Something went wrong"

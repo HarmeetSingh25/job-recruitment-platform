@@ -8,11 +8,13 @@ export const getjobs = async (req, res) => {
 
     // console.log("Service completed");
 
+    // console.log(jobs , "fronete");
     return res.status(200).json({
       success: true,
       ...jobs,
 
     });
+    
   } catch (err) {
     console.log(err);
     return res.status(500).json({

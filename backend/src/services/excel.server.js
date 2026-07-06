@@ -15,21 +15,37 @@ export const readExcelFile = (filePath) => {
   const rows = xlsx.utils.sheet_to_json(worksheet);
 
   // Clean every row
-  const cleanedRows = rows.map((row) => ({
-    title: row.title?.trim() || "",
-    company: row.company?.trim() || "",
-    location: row.location?.trim() || "",
-    url: row.url?.trim() || "",
-    description: cleanHtml(row.description),
-    applyType: row.applyType?.trim() || "",
-    experienceLevel: row.experience_level?.trim() || "",
-    datePosted: parseDate(row.datePosted),
-    salary: row.salary?.toString().trim() || "",
-    currency: row.currency?.trim() || "",
-    employmentType: row.employment_type?.trim() || "",
-    department: row.department?.trim() || "",
-    remoteFlag: row.remote_flag?.trim() || "",
-  }));
+ const cleanValue = (value, fallback = "N/A") => {
+  if (value === null || value === undefined) return fallback;
+
+  const cleaned = String(value).trim();
+
+  if (
+    cleaned === "" ||
+    cleaned.toLowerCase() === "null" ||
+    cleaned.toLowerCase() === "undefined"
+  ) {
+    return fallback;
+  }
+
+  return cleaned;
+};
+
+const cleanedRows = rows.map((row) => ({
+  title: cleanValue(row.title),
+  company: cleanValue(row.company),
+  location: cleanValue(row.location),
+  url: cleanValue(row.url, ""),
+  description: cleanHtml(row.description || ""),
+  applyType: cleanValue(row.applyType),
+  experienceLevel: cleanValue(row.experience_level),
+  datePosted: parseDate(row.datePosted),
+  salary: cleanValue(row.salary),
+  currency: cleanValue(row.currency),
+  employmentType: cleanValue(row.employment_type),
+  department: cleanValue(row.department),
+  remoteFlag: cleanValue(row.remote_flag),
+}));
 
   return cleanedRows;
 };

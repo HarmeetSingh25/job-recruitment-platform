@@ -1,41 +1,46 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
-import JobTableSkeleton from "../components/JobTableSkeleton";
+import Pagination from "../components/Pagination";
 import { fetchJobs } from "../slice/jobslice";
+
+import JobSearch from "../components/JobSearch";
 import JobTable from "../components/JobTable";
+import useDebounce from "../../../hooks/   useDebounce";
 
 const Jobs = () => {
   const dispatch = useDispatch();
+  const { jobs, loading, pagination } = useSelector((state) => state.jobs);
+  const [page, setPage] = useState(1);
 
-  const { jobs, loading, error , pagination } = useSelector(
-    (state) => state.jobs
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search);
+
+ useEffect(() => {
+  dispatch(
+    fetchJobs({
+      page,
+      limit: 10,
+      search: debouncedSearch,
+    })
   );
+}, [dispatch, page, debouncedSearch]);
 
-  const handlePageChange = (page) => {
-    dispatch(
-        fetchJobs({
-            page,
-            limit: pagination.limit,
-        })
-    );
-};
+  return (
+    <div className="space-y-6">
+      <JobSearch
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
 
-  useEffect(() => {
-    dispatch(fetchJobs({
-        page: 1,
-        limit: 10
-    }));
-}, [dispatch]);
+      <JobTable jobs={jobs} />
 
-
-if (loading) {
-  return <JobTableSkeleton />;
-}
-
-  if (error) return <h1>{error}</h1>;
-
-  return <JobTable jobs={jobs} />;
+<Pagination
+    page={page}
+    totalPages={pagination.totalPages}
+    onPageChange={setPage}
+/>
+    </div>
+  );
 };
 
 export default Jobs;
