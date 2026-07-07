@@ -10,7 +10,7 @@ The application enables recruiters to efficiently search, analyze, and manage jo
 ## Live Demo
 
 Frontend:
-https://job-recruitment-platform-m35vi47s3-codes-h7s-projects.vercel.app/
+https://job-recruitment-platform-eta.vercel.app/
 
 Backend API:
 https://job-recruitment-platform-ky9a.onrender.com/
