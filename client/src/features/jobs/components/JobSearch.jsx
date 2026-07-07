@@ -10,6 +10,7 @@ const JobSearch = ({ value, onChange }) => {
 
       <input
         type="text"
+        autoFocus
         placeholder="Search by title, company, location..."
         value={value}
         onChange={onChange}

@@ -3,6 +3,7 @@ import {
   LayoutDashboard,
   Briefcase,
   BarChart3,
+  CopyCheck,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -17,11 +18,16 @@ const Sidebar = () => {
       path: "/jobs",
       icon: Briefcase,
     },
+    // {
+    //   name: "Analytics",
+    //   path: "/analytics",
+    //   icon: BarChart3,
+    // },
     {
-      name: "Analytics",
-      path: "/analytics",
-      icon: BarChart3,
-    },
+  name: "Duplicate Review",
+  path: "/duplicates",
+  icon: CopyCheck, // or Files
+}
   ];
 
   return (

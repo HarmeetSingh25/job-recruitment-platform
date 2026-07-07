@@ -5,18 +5,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDashboard } from "../slice/dashboardSlice";
 import DashboardSkeleton from "../components/DashboardSkeleton";
 import DashboardCharts from "../components/DashboardCharts";
+import { fetchDuplicates } from "../../duplicates/slice/duplicateSlice";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
+
   const { stats, loading, error } = useSelector(
     (state) => state?.dashboard
   );
-console.log(stats?.topLocations , "topLocations");
-console.log(stats?.employmentTypes , "employmentTypes");
-console.log(stats?.experienceLevels , "experienceLevels");
+ const duplicates  = useSelector(
+    (state) => state?.duplicates
+  );
+
+  console.log(duplicates ,"s");
+  
+// console.log(stats?.topLocations , "topLocations");
+// console.log(stats?.employmentTypes , "employmentTypes");
+// console.log(stats?.experienceLevels , "experienceLevels");
 
   useEffect(() => {
     dispatch(fetchDashboard());
+    dispatch(fetchDuplicates())
   }, [dispatch]);
   if (loading) {
     <DashboardSkeleton />
