@@ -11,10 +11,20 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: "https://job-recruitment-platform-1auidkcwt-codes-h7s-projects.vercel.app/",
+    origin: (origin, callback) => {
+      if (
+        !origin ||
+        origin === "http://localhost:5173" ||
+        origin.endsWith(".vercel.app")
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
-)
+);
 
 app.use(morgan("dev"));
 app.use(express.json());
