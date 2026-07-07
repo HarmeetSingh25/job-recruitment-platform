@@ -26,15 +26,13 @@ export const importJobs = async () => {
         continue;
       }
 
-      // duplicate check
-
-      // insert
     }
 
-    console.log(`Found ${jobs.length} jobs`);
+    // console.log(`Found ${jobs.length} jobs`);
 
     // Fetch all existing URLs in one query
     const existingJobs = await Job.find({}, "_id url title company location");
+
     // console.log(existingJobs);
 
     const seenUrls = new Set();
@@ -92,4 +90,4 @@ export const importJobs = async () => {
   }
 };
 
-importJobs();
+// importJobs();

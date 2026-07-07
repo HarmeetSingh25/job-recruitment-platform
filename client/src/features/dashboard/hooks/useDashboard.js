@@ -9,7 +9,7 @@ const useDashboard = () => {
     const fetchDashboard = async () => {
       try {
         const data = await getDashboardStats();
-        console.log(data);
+        // console.log(data);
         
         setStats(data);
       } catch (err) {

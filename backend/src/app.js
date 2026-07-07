@@ -28,8 +28,8 @@ app.use(
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use("/api/jobs", jobRoutes);
 app.use("/api/dashboard", dashboardRouter);
+app.use("/api/jobs", jobRoutes);
 app.use("/api/duplicates", duplicateRouter);
 
 export default app;
